@@ -9,9 +9,9 @@ class PokedexRepositoryImpl @Inject constructor (
     private val api: PokedexApi
 ) : PokedexRepository  {
 
-    override suspend fun getPokemon(): PokemonResponse {
+    override suspend fun getPokemon(offset: Int, limit: Int): PokemonResponse {
         // Make the network request using the PokedexApi
-        val response = api.getPokemon()
+        val response = api.getPokemon(offset, limit)
 
         if (response.isSuccessful) {
             // API call was successful, return the data
