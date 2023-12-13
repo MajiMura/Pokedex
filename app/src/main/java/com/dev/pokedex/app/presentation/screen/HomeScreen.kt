@@ -1,5 +1,7 @@
 package com.dev.pokedex.app.presentation.screen
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -28,16 +30,18 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction.Companion.Search
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.dev.pokedex.app.presentation.components.pokemon_list.PokemonList
 import com.dev.pokedex.app.presentation.view_model.HomeViewModel
 import com.dev.pokedex.app.presentation.view_model.PokemonListState
 
 @Composable
-fun HomeScreen (viewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen (selectedPokemon: (Int) -> Unit, viewModel: HomeViewModel = hiltViewModel()) {
     val pokemonListState by viewModel.pokemonList.collectAsState()
     val scrollState = rememberLazyListState()
     when (val state = pokemonListState) {
@@ -51,13 +55,24 @@ fun HomeScreen (viewModel: HomeViewModel = hiltViewModel()) {
         is PokemonListState.Success -> {
             Scaffold (
                 topBar = { PokedexTopAppBar(onSearchTextChanged = { value -> viewModel.searchPokemon(value) },
-                    onMicClicked = {}, onBurgerClicked = {}) },) {
-                paddingValues -> PokemonList(listOfPokemon = state.allPokemon,
-                    scrollState = scrollState,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues),
-                    loadMore = { viewModel.loadMore() })
+                    onMicClicked = {}, onBurgerClicked = {}) },) { innerPadding ->
+                Box(
+                    modifier = Modifier.background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                Color(0xFF978CD0), // Start color
+                                Color(0xFF7367B0)
+                            )
+                        )).padding(innerPadding).fillMaxSize()
+                ) {
+                    PokemonList(listOfPokemon = state.allPokemon,
+                        scrollState = scrollState,
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        loadMore = { viewModel.loadMore() },
+                        selectedPokemon = selectedPokemon
+                        )
+                }
             }
         }
     }
@@ -65,7 +80,7 @@ fun HomeScreen (viewModel: HomeViewModel = hiltViewModel()) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PokedexTopAppBar(
+private fun PokedexTopAppBar(
     onSearchTextChanged: (String) -> Unit,
     onMicClicked: () -> Unit,
     onBurgerClicked: () -> Unit,
@@ -91,8 +106,8 @@ fun PokedexTopAppBar(
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.Red,
-            scrolledContainerColor = Color.Red,
+            containerColor = Color(0xFFDE0024),
+            scrolledContainerColor = Color(0xFFDE0024),
             navigationIconContentColor = Color.Yellow,
             titleContentColor = Color.Yellow,
             actionIconContentColor = Color.Yellow

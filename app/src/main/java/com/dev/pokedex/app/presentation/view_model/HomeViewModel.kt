@@ -82,6 +82,6 @@ class HomeViewModel @Inject constructor(
         } else {
             allPokemon
         }
-        _pokemonListState.value = PokemonListState.Success(filteredPokemon)
+        _pokemonListState.value = PokemonListState.Success(filteredPokemon.toList())
     }
 }

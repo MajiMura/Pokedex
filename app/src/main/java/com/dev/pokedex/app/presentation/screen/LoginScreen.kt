@@ -35,14 +35,14 @@ import androidx.navigation.NavController
 import com.dev.pokedex.app.presentation.view_model.SampleViewModel
 
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(navigateToHome:  () -> Unit) {
     Surface {
         Column (
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = Color.Red)
+                .background(color = Color(0xFFDE0024))
                 .padding(20.dp)
         ) {
             Text(
@@ -64,7 +64,7 @@ fun LoginScreen(navController: NavController) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(10.dp),
-                        onClick = { navController.navigate("home_screen") }) {
+                        onClick = { navigateToHome() }) {
                         Text(text = "Login", fontSize = 16.sp)
                     }
                 }

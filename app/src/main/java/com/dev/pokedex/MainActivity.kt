@@ -1,5 +1,6 @@
 package com.dev.pokedex
 
+import AppNavigation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -32,6 +33,7 @@ import androidx.navigation.compose.rememberNavController
 import com.dev.pokedex.app.presentation.components.pokemon_list.PokemonList
 import com.dev.pokedex.app.presentation.screen.HomeScreen
 import com.dev.pokedex.app.presentation.screen.LoginScreen
+import com.dev.pokedex.app.presentation.screen.PokemonOverviewScreen
 import com.dev.pokedex.app.presentation.view_model.HomeViewModel
 import com.dev.pokedex.app.presentation.view_model.PokemonListState
 import com.dev.pokedex.app.presentation.view_model.SampleViewModel
@@ -43,75 +45,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PokedexTheme {
-                val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = "auth",
-                    enterTransition = { EnterTransition.None },
-                    exitTransition = { ExitTransition.None }) {
-                    navigation(startDestination = "login", route = "auth",
-                        ) {
-                        composable("login") {
-                            LoginScreen(navController = navController)
-                        }
-                    }
-
-                    navigation(startDestination = "home", route = "home_screen") {
-                        composable("home",
-                            enterTransition = {
-                                slideIntoContainer(
-                                    towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
-                                    animationSpec = tween(700)
-                                )
-                            },
-                            exitTransition = {
-                                slideOutOfContainer(
-                                    towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
-                                    animationSpec = tween(700)
-                                )
-                            },
-                            popEnterTransition = {
-                                slideIntoContainer(
-                                    towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
-                                    animationSpec = tween(700)
-                                )
-                            },
-                            popExitTransition = {
-                                slideOutOfContainer(
-                                    towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
-                                    animationSpec = tween(700)
-                                )
-                            }) {
-                            // Use collectAsState to observe the state in the ViewModel
-                            HomeScreen()
-                        }
-                    }
-                }
+                AppNavigation()
             }
         }
     }
-}
-
-@Composable
-inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(navController: NavController): T {
-    val navGraphRoute = destination.parent?.route ?: return viewModel()
-    val parentEntry = remember(this) {
-        navController.getBackStackEntry(navGraphRoute)
-    }
-    return viewModel(parentEntry)
-}
-
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     PokedexTheme {
-        Greeting("Android")
+        AppNavigation()
     }
 }

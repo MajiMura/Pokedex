@@ -67,9 +67,8 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
 
     // UI Tests
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.0.5")
     // Optional - Integration with activities
     implementation("androidx.activity:activity-compose:1.8.1")
 
@@ -103,6 +102,23 @@ dependencies {
     implementation ("androidx.compose.material:material-icons-extended:1.1.0-alpha01")
 
 
+    // Testing
+
+    // Required -- JUnit 4 framework
+    testImplementation("junit:junit:4.13.2")
+    // Optional -- Robolectric environment
+    testImplementation("androidx.test:core:1.5.0")
+    // Optional -- Mockito framework
+    testImplementation("org.mockito:mockito-core:5.8.0")
+    // Optional -- mockito-kotlin
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
+    // Optional -- Mockk framework
+    testImplementation("io.mockk:mockk:1.13.8")
+    // Optional -- mockito-android
+    androidTestImplementation("org.mockito:mockito-android:5.8.0")
+
+    // OKHTTP
+    implementation("com.squareup.okhttp3:okhttp:4.9.1")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.8.1")
@@ -111,8 +127,6 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")

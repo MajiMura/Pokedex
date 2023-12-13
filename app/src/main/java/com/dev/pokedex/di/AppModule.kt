@@ -37,5 +37,4 @@ object AppModule {
             .build()
             .create(PokedexApi::class.java)
     }
-
 }
