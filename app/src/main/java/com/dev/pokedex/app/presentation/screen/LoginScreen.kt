@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.dev.pokedex.app.presentation.view_model.SampleViewModel
+import com.dev.pokedex.ui.fonts.pocketMonkFamily
 
 @Composable
 fun LoginScreen(navigateToHome:  () -> Unit) {
@@ -48,6 +49,7 @@ fun LoginScreen(navigateToHome:  () -> Unit) {
             Text(
                 text = "Pokédex",
                 style = TextStyle.Default.copy(
+                    fontFamily = pocketMonkFamily,
                     fontSize = 72.sp,
                     color = Color.Yellow,
                     fontWeight = FontWeight.ExtraBold,
@@ -69,9 +71,9 @@ fun LoginScreen(navigateToHome:  () -> Unit) {
                     }
                 }
             }
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
+            Column(
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.fillMaxWidth()) {
                 Text(
                     text = "Register",
@@ -84,16 +86,6 @@ fun LoginScreen(navigateToHome:  () -> Unit) {
                     modifier = Modifier
                         .padding(10.dp)
                         .clickable { /* Handle Register click */ }
-                )
-                Text(
-                    text = "|",
-                    style = TextStyle(
-                        textAlign = TextAlign.Center,
-                        fontSize = 16.sp,
-                        color = Color.Cyan,
-                        textDecoration = TextDecoration.Underline
-                    ),
-                    modifier = Modifier.padding(10.dp)
                 )
                 Text(
                     text = "Forgot Password",

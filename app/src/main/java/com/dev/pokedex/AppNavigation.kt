@@ -11,7 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.dev.pokedex.app.presentation.screen.HomeScreen
 import com.dev.pokedex.app.presentation.screen.LoginScreen
-import com.dev.pokedex.app.presentation.screen.PokemonOverviewScreen
+import com.dev.pokedex.app.presentation.screen.PokemonDetailsScreen
 
 /**
  * Destinations used in the App
@@ -21,14 +21,14 @@ private object AppDestinations {
     const val LOGIN_ROUTE = "login"
     const val HOME_ROUTE = "home"
     const val POKEMON_OVERVIEW_ROUTE = "pokemon_overview"
-    const val POKEMON_OVERVIEW_ID_KEY = "pokemonId"
+    const val POKEMON_OVERVIEW_ID_KEY = "pokemonName"
 }
 
 private class AppActions(
     private val navController: NavHostController
 ) {
-    val selectedPokemon: (Int) -> Unit = { pokemonId: Int ->
-        navController.navigate("${AppDestinations.POKEMON_OVERVIEW_ROUTE}/$pokemonId")
+    val selectedPokemon: (String) -> Unit = { pokemonName: String ->
+        navController.navigate("${AppDestinations.POKEMON_OVERVIEW_ROUTE}/$pokemonName")
     }
 
     val navigateUp: () -> Unit = {
@@ -67,15 +67,16 @@ fun AppNavigation(
             route = "${AppDestinations.POKEMON_OVERVIEW_ROUTE}/{$POKEMON_OVERVIEW_ID_KEY}",
             arguments = listOf(
                 navArgument(POKEMON_OVERVIEW_ID_KEY) {
-                    type = NavType.IntType
+                    type = NavType.StringType
                 }
             )
         ) { backStackEntry ->
             val arguments = requireNotNull(backStackEntry.arguments)
-            PokemonOverviewScreen(
-                pokemonId = arguments.getInt(POKEMON_OVERVIEW_ID_KEY),
-                navigateUp = actions.navigateUp
-            )
+            arguments.getString(POKEMON_OVERVIEW_ID_KEY)?.let {
+                PokemonDetailsScreen(
+                    navigateUp = actions.navigateUp
+                )
+            }
         }
     }
 }

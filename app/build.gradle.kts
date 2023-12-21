@@ -72,6 +72,9 @@ dependencies {
     // Optional - Integration with activities
     implementation("androidx.activity:activity-compose:1.8.1")
 
+    // COIL
+    implementation("io.coil-kt:coil-compose:2.5.0")
+
     // Optional - Integration with ViewModels
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
     // Optional - Integration with LiveData
@@ -82,6 +85,7 @@ dependencies {
     // Serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
+    implementation("com.google.code.gson:gson:2.10.1")
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.44")
@@ -90,7 +94,10 @@ dependencies {
 
     // Retrofit + Moshi
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-moshi:2.4.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation("com.squareup.moshi:moshi:1.12.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
+
 
     // Coroutines for asynchronous programming
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")

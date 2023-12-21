@@ -1,6 +1,7 @@
 package com.dev.pokedex.app.presentation.components.pokemon_list
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,16 +27,15 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.dev.pokedex.app.domain.model.Pokemon
+import com.dev.pokedex.app.presentation.util.digitCorrection
+import com.dev.pokedex.ui.fonts.pokemonGameboyFamily
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun PokemonListItem(pokemon: Pokemon, index: Int, selectedPokemon: (Int) -> Unit) {
+fun PokemonListItem(pokemon: Pokemon, index: Int, selectedPokemon: (String) -> Unit) {
     var isPressed by remember { mutableStateOf(false) }
     val interactionState = rememberUpdatedState(isPressed)
 
@@ -52,17 +52,27 @@ fun PokemonListItem(pokemon: Pokemon, index: Int, selectedPokemon: (Int) -> Unit
         .clip(RoundedCornerShape(24.dp)),
         shape = RoundedCornerShape(24.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-        onClick = { selectedPokemon(index) },
+        onClick = { selectedPokemon(pokemon.name) },
     ) {
-        Surface (color = if (interactionState.value) Color.Gray else Color(0xFFDE0024)) {
+        Surface (color = if (interactionState.value) Color.Gray else Color(0xFFF9E4A2)) {
             Row (
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .padding(4.dp)
-                    .fillMaxSize()) {
+                    .fillMaxSize()
+                    .background(
+                        Color(0xFFF9E4A2),
+                        shape = RoundedCornerShape(24.dp)
+                    )
+                    .border(
+                        2.dp,
+                        Color(0xFFEACC7D),
+                        shape = RoundedCornerShape(24.dp)
+                    )) {
                 Text(text = pokemon.name.uppercase(),
-                    color = Color.White,
+                    fontFamily = pokemonGameboyFamily,
+                    color = Color.Black,
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier
@@ -71,14 +81,11 @@ fun PokemonListItem(pokemon: Pokemon, index: Int, selectedPokemon: (Int) -> Unit
                 Text(text = digitCorrection(index),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White,
+                    fontFamily = pokemonGameboyFamily,
+                    color = Color.Black,
                     modifier = Modifier
                         .padding(end = 16.dp))
             }
         }
     }
-}
-
-fun digitCorrection(index: Int): String {
-    return "#${String.format("%03d", index)}"
 }

@@ -13,7 +13,7 @@ fun PokemonList(listOfPokemon: List<Pokemon>,
                 scrollState: LazyListState,
                 modifier: Modifier = Modifier,
                 loadMore: () -> Unit,
-                selectedPokemon: (Int) -> Unit) {
+                selectedPokemon: (String) -> Unit) {
     LazyColumn (
         state = scrollState,
     ) {

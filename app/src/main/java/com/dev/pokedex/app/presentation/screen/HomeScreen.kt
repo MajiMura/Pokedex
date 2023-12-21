@@ -41,7 +41,7 @@ import com.dev.pokedex.app.presentation.view_model.HomeViewModel
 import com.dev.pokedex.app.presentation.view_model.PokemonListState
 
 @Composable
-fun HomeScreen (selectedPokemon: (Int) -> Unit, viewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen (selectedPokemon: (String) -> Unit, viewModel: HomeViewModel = hiltViewModel()) {
     val pokemonListState by viewModel.pokemonList.collectAsState()
     val scrollState = rememberLazyListState()
     when (val state = pokemonListState) {

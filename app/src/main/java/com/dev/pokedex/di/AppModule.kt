@@ -1,18 +1,14 @@
 package com.dev.pokedex.di
 
-import android.content.Context
-import com.dev.pokedex.PokedexApplication
 import com.dev.pokedex.app.data.remote.PokedexApi
-import com.dev.pokedex.app.data.repository.PokedexRepositoryImpl
-import com.dev.pokedex.app.domain.repository.PokedexRepository
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import javax.inject.Named
 import javax.inject.Singleton
 
 /**
@@ -28,13 +24,21 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    // Create a Moshi instance using MoshiConverterFactory
+    private val moshi: Moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
+
+    // Use the Moshi instance in your Retrofit setup
+    private val retrofit: Retrofit = Retrofit.Builder()
+        .baseUrl("https://pokeapi.co/api/v2/")
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .build()
+
     @Provides
     @Singleton
     fun providePokedexApi(): PokedexApi {
-        return Retrofit.Builder()
-            .baseUrl("https://pokeapi.co/api/v2/")
-            .addConverterFactory(MoshiConverterFactory.create())
-            .build()
+        return retrofit
             .create(PokedexApi::class.java)
     }
 }

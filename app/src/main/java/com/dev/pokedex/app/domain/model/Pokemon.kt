@@ -1,21 +1,13 @@
 package com.dev.pokedex.app.domain.model
 
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Serializable
-data class PokemonResponse(
-    val count: Int,
-    val next: String?,
-    val previous: String?,
-    var results: List<Pokemon>
-)
-/**
- * This data class defines a Mars photo which includes an ID, and the image URL.
- */
-@Serializable
+@JsonClass(generateAdapter = true)
 data class Pokemon(
     val name : String,
-    @SerialName(value = "url")
+    @field:Json(name = "url")
     val url: String
 )

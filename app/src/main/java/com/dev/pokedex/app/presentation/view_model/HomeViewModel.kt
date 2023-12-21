@@ -3,7 +3,6 @@ package com.dev.pokedex.app.presentation.view_model
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dev.pokedex.app.domain.model.Pokemon
-import com.dev.pokedex.app.domain.model.PokemonResponse
 import com.dev.pokedex.app.domain.repository.PokedexRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.Lazy
